@@ -4,15 +4,13 @@ date: 2019-10-25 15:58:38
 tags:
 ---
 
-#### 痛点
+### 痛点
 
 日常iOS开发中，描述文件的管理是一个费时的事情。通常开发者账号仅有部分开发者有权限可以操作，当添加一个测试设备时，需要更新所有的`development`和`ADHoc`描述文件，下载到本地，并替换本地的描述文件，如果有CI系统还需要更新CI上的描述文件。对于区分内外网的公司，可能中间还需要切换网路等操作。总之，这是一件繁琐的事情。
 
 ### spaceship
 
 [spaceship](https://github.com/fastlane/fastlane)作为`fastlane`中的一个组件，可以帮助我们处理开发者账号相关的功能：创建appid、更新appid属性、添加设备、更新描述文件等等。
-
-
 
 ##### Login
 
@@ -61,8 +59,6 @@ app.update_service(Spaceship::Portal.app_service.passbook.off)
 app.update_service(Spaceship::Portal.app_service.cloud_kit.cloud_kit)
 ```
 
-
-
 ##### App Groups
 
 ```ruby
@@ -85,8 +81,6 @@ group = Spaceship::Portal.app_group.create!(group_id: "group.com.example.another
 # Assumes app contains a fetched app, as described above
 app = app.associate_groups([group])
 ```
-
-
 
 ##### Certificates
 
@@ -129,8 +123,6 @@ csr, pkey = Spaceship::Portal.certificate.create_certificate_signing_request
 Spaceship::Portal.certificate.production_push.create!(csr: csr, bundle_id: "com.krausefx.app")
 ```
 
-
-
 ###### Create a Certificate
 
 ```ruby
@@ -140,8 +132,6 @@ csr, pkey = Spaceship::Portal.certificate.create_certificate_signing_request
 # Use the signing request to create a new distribution certificate
 Spaceship::Portal.certificate.production.create!(csr: csr)
 ```
-
-
 
 ##### Provisioning Profiles
 
@@ -184,8 +174,6 @@ first_profile = matching_profiles.first
 File.write("output.mobileprovision", first_profile.download)
 ```
 
-
-
 ###### Create a Provisioning Profile
 
 ```ruby
@@ -206,8 +194,6 @@ profile = Spaceship::Portal.provisioning_profile.ad_hoc.create!(bundle_id: "com.
 File.write("NewProfile.mobileprovision", profile.download)
 ```
 
-
-
 ###### Repair all broken provisioning profiles
 
 ```ruby
@@ -225,8 +211,6 @@ end
 # or to do the same thing, just more Ruby like
 Spaceship::Portal.provisioning_profile.all.find_all { |p| !p.valid? || !p.certificate_valid? }.map(&:repair!)
 ```
-
-
 
 ##### Devices
 
@@ -252,8 +236,6 @@ disabled_devices = Spaceship::Portal.device.all(include_disabled: true).select(&
 Spaceship::Portal.device.create!(name: "Private iPhone 6", udid: "5814abb3...")
 ```
 
-
-
 ##### Enterprise
 
 ```ruby
@@ -267,8 +249,6 @@ profile = Spaceship::Portal.provisioning_profile.in_house.create!(bundle_id: "co
 # List all In-House Provisioning Profiles
 profiles = Spaceship::Portal.provisioning_profile.in_house.all
 ```
-
-
 
 ##### Multiple Spaceships
 
@@ -287,13 +267,9 @@ devices.each do |device|
 end
 ```
 
-
-
 ### 脚本
 
 从上面可以看到，`spaceship`可以帮我们处理几乎所有需要在苹果开发者中心中操作的所有事项，因此完全可以基于`spaceship`编写一个注册新设备并自动更新、下载、同步描述文件的脚本来解决我们的问题。`spaceship`是使用`Ruby`写的，因此我们可以使用`Ruby`来编写这个脚本。
-
-
 
 由于脚本可能会分享给内部或外部人员，可以将脚本编写得更通用、安全一些：
 
@@ -302,8 +278,6 @@ end
 - 安全性，无需将账号、密码等信息硬编码在脚本中
 
 - 便捷性，能较安全地记住密码（比如借助keychain）
-
-
 
 由于对`Ruby`相对陌生，可以借助`Dash`查询相应的API，在`Dash`中下载相应的文档即可。
 
@@ -325,8 +299,6 @@ puts "name:${name}"
 ```
 
 代码运行后，会在设置了binding的地方暂停，即可进行调试。
-
-
 
 最终[示例代码](https://github.com/sleepEarlier/spaceshipUpdateProfile):
 
@@ -428,7 +400,3 @@ downloadProfiles.each do |p|
     puts "\t-Replace #{p.name} in Provisioning Profiles"
 end
 ```
-
-
-
-
