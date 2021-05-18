@@ -124,6 +124,8 @@ cy# [#0x156f9f0a0 show]
 
 ## 砸壳
 
+[砸壳这件破事](https://mp.weixin.qq.com/s/xFHA2tlc6HCLti_ihlrsZA)
+
 ### 方式一: [dumpdecrypted](https://link.jianshu.com/?t=https://github.com/stefanesser/dumpdecrypted)
 
 1. 越狱iOS设备安装 [Cycript]http://www.cycript.org/) 与 [OpenSSH]https://www.openssh.com/)
@@ -227,6 +229,16 @@ cy# [#0x156f9f0a0 show]
    7. 砸壳 `./dump.py bundleId`，完成后 IPA 会在 mac 当前目录下（此处也可以忽略上一步，直接使用应用中文名）
 
    8. 对于 SSH \ SCP 操作，确保将电脑上的公钥添加到iOS设备的 `~/.ssh/authorized_keys` 上
+   
+   ## 方式四: bagbak
+   
+   [bagbak](https://github.com/ChiChou/bagbak) 也是基于 frida 但依赖项更少，更简洁，甚至不需要 ssh。
+   
+   
+   
+   ## 方式五: 
+   
+   [flexdecrypt](https://github.com/JohnCoates/flexdecrypt) ，一个接近静态脱壳的工具
 
 ## 符号表恢复
 
@@ -516,4 +528,16 @@ deb实际上是一个压缩包，如果使用其他压缩软件解压会丢失�
 ```
 frida-ps -U
 ```
+
+
+
+#### 参考
+
+[砸壳这件破事](https://mp.weixin.qq.com/s/xFHA2tlc6HCLti_ihlrsZA)
+
+[iOS 越狱的Tweak开发](https://www.jianshu.com/p/a5435650e828)
+
+[在iOS上使用Frida](https://www.dazhuanlan.com/2020/02/01/5e353c6612dc9/)
+
+[在iOS应用程序中使用Frida绕过越狱检测](https://zhuanlan.zhihu.com/p/26845694)
 
