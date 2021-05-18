@@ -80,6 +80,7 @@ theme: BlueLake
 deploy:
   type: git
   repo: https://github.com/sleepEarlier/sleepEarlier.github.io.git
+  branch: master
 
 avatar: https://github.com/sleepEarlier/hexo/raw/master/images/avata/hqdefault.jpg
 location: Shen Zhen
